@@ -225,26 +225,40 @@
             backdrop-filter: blur(10px);
             animation: fadeIn 1s ease-out;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            position: relative;
+        }
+
+        .tableauPlaceholder {
+            width: 100%;
+            position: relative;
+        }
+
+        .tableauViz {
+            width: 100% !important;
+        }
+
+        .tableau-fallback {
+            display: none;
             text-align: center;
-        }
-
-        .tableau-link {
-            display: inline-block;
-            padding: 1.5rem 3rem;
-            background: linear-gradient(to right, #0EA5E9, #2563EB);
+            padding: 2rem;
             color: #F8FAFC;
-            text-decoration: none;
+            background: rgba(255, 0, 0, 0.2);
             border-radius: 8px;
-            font-weight: 700;
-            font-size: 1.2rem;
-            transition: transform 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
-            box-shadow: 0 4px 15px rgba(14, 165, 233, 0.3);
+            margin: 1rem 0;
         }
 
-        .tableau-link:hover {
-            transform: scale(1.05);
-            background: linear-gradient(to right, #38BDF8, #3B82F6);
-            box-shadow: 0 6px 20px rgba(14, 165, 233, 0.5);
+        .tableau-fallback a {
+            color: #0EA5E9;
+            text-decoration: underline;
+        }
+
+        .tableau-static {
+            display: block;
+            width: 100%;
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin-bottom: 1rem;
         }
 
         .features-grid {
@@ -342,11 +356,6 @@
                 font-size: 1.2rem;
             }
 
-            .tableau-link {
-                padding: 1.2rem 2.5rem;
-                font-size: 1rem;
-            }
-
             .nav-logo svg {
                 width: 36px;
                 height: 36px;
@@ -398,20 +407,32 @@
     <section id="analytics" class="section">
         <h2>Dividend Stock Analytics Dashboard</h2>
         <div class="tableau-container">
-            <!-- Replaced iframe with a styled link due to embedding issues -->
-            <a href="https://public.tableau.com/views/Dividend_17459468512610/Dashboard1" target="_blank" class="tableau-link">View Dashboard on Tableau Public</a>
-
-            <!-- To revert to iframe once embedding is enabled, uncomment the following: -->
-            <!--
-            <iframe 
-                class="tableau-embed"
-                src="https://public.tableau.com/views/Dividend_17459468512610/Dashboard1?:showVizHome=no&:embed=true&:size=1200,800"
-                title="Dividend Stock Analytics Dashboard">
-            </iframe>
-            <div class="tableau-fallback" id="tableau-fallback">
-                <p>Unable to load the Tableau dashboard. Please view it directly on <a href="https://public.tableau.com/views/Dividend_17459468512610/Dashboard1" target="_blank">Tableau Public</a>.</p>
+            <div class='tableauPlaceholder' id='viz1745946882621' style='position: relative'>
+                <noscript>
+                    <a href='https://public.tableau.com/views/Dividend_17459468512610/Dashboard1'>
+                        <img alt='Dashboard 1 ' src='https://public.tableau.com/static/images/Di/Dividend_17459468512610/Dashboard1/1_rss.png' style='border: none' class="tableau-static" />
+                    </a>
+                </noscript>
+                <object class='tableauViz' style='display:none;'>
+                    <param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' />
+                    <param name='embed_code_version' value='3' />
+                    <param name='site_root' value='' />
+                    <param name='name' value='Dividend_17459468512610/Dashboard1' />
+                    <param name='toolbar' value='yes' />
+                    <param name='static_image' value='https://public.tableau.com/static/images/Di/Dividend_17459468512610/Dashboard1/1.png' />
+                    <param name='animate_transition' value='yes' />
+                    <param name='display_static_image' value='yes' />
+                    <param name='display_spinner' value='yes' />
+                    <param name='display_overlay' value='yes' />
+                    <param name='display_count' value='yes' />
+                    <param name='language' value='en-US' />
+                    <param name='filter' value='publish=yes' />
+                </object>
             </div>
-            -->
+            <div class="tableau-fallback" id="tableau-fallback">
+                <img src="https://public.tableau.com/static/images/Di/Dividend_17459468512610/Dashboard1/1.png" alt="Static Dashboard Preview" class="tableau-static" />
+                <p>Interactive dashboard could not be loaded. Please ensure embedding is enabled in Tableau Public settings, or view it directly on <a href="https://public.tableau.com/views/Dividend_17459468512610/Dashboard1" target="_blank">Tableau Public</a>.</p>
+            </div>
         </div>
     </section>
 
@@ -491,6 +512,37 @@
             const scrollPosition = window.scrollY;
             heroBackground.style.transform = `translateY(${scrollPosition * 0.2}px)`;
         });
+
+        // Tableau JavaScript API Embed Script
+        var divElement = document.getElementById('viz1745946882621');
+        var vizElement = divElement.getElementsByTagName('object')[0];
+        if (divElement.offsetWidth > 800) {
+            vizElement.style.width = '100%';
+            vizElement.style.height = (divElement.offsetWidth * 0.75) + 'px';
+        } else if (divElement.offsetWidth > 500) {
+            vizElement.style.width = '100%';
+            vizElement.style.height = (divElement.offsetWidth * 0.75) + 'px';
+        } else {
+            vizElement.style.width = '100%';
+            vizElement.style.height = '727px';
+        }
+        var scriptElement = document.createElement('script');
+        scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';
+        scriptElement.onload = function() {
+            // Check if the dashboard loaded and is interactive
+            setTimeout(() => {
+                const tableauViz = document.querySelector('.tableauViz');
+                const fallbackDiv = document.getElementById('tableau-fallback');
+                if (tableauViz.style.display === 'none') {
+                    fallbackDiv.style.display = 'block';
+                }
+            }, 5000);
+        };
+        scriptElement.onerror = function() {
+            // If the script fails to load, show the fallback
+            document.getElementById('tableau-fallback').style.display = 'block';
+        };
+        vizElement.parentNode.insertBefore(scriptElement, vizElement);
     </script>
 </body>
 </html>
