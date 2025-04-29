@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dividend Stock Analytics</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0F2A4D 0%, #4A6582 100%);
+            color: #F8FAFC;
+            line-height: 1.6;
+        }
+
+        .navbar {
+            background: #0A1C3B;
+            padding: 1rem 2rem;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .navbar.scrolled {
+            background: #07112E;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            transition: transform 0.3s ease;
+        }
+
+        .nav-logo:hover {
+            transform: scale(1.05);
+        }
+
+        .nav-logo svg {
+            width: 48px;
+            height: 48px;
+            margin-right: 0.5rem;
+        }
+
+        .nav-logo span {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #0EA5E9;
+        }
+
+        .nav-links a {
+            color: #E0F2FE;
+            text-decoration: none;
+            margin-left: 2rem;
+            font-size: 1.1rem;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #0EA5E9;
+        }
+
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 0 2rem;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, #1A3266 0%, #3B82F6 100%), radial-gradient(circle at center, rgba(255, 255, 255, 0.2), transparent);
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.3);
+            z-index: 1;
+        }
+
+        .hero-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+
+        .hero-background span {
+            position: absolute;
+            background: rgba(14, 165, 233, 0.2);
+            border-radius: 50%;
+            animation: float 15s infinite;
+        }
+
+        .hero-background span:nth-child(1) {
+            width: 100px;
+            height: 100px;
+            top: 10%;
+            left: 15%;
+            animation-delay: 0s;
+        }
+
+        .hero-background span:nth-child(2) {
+            width: 80px;
+            height: 80px;
+            top: 60%;
+            left: 70%;
+            animation-delay: 5s;
+        }
+
+        .hero-background span:nth-child(3) {
+            width: 120px;
+            height: 120px;
+            top: 30%;
+            left: 85%;
+            animation-delay: 10s;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-content h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            animation: fadeInUp 1s ease-out;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        .hero-content h1::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(to right, #2EA086, #0EA5E9);
+            border-radius: 2px;
+        }
+
+        .hero-content p {
+            font-size: 1.3rem;
+            max-width: 600px;
+            margin: 0 auto 2rem;
+            animation: fadeInUp 1.2s ease-out;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 2rem 4rem;
+            background: linear-gradient(to right, #2EA086, #0A7B5F);
+            color: #0F172A;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 1.4rem;
+            transition: transform 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+            animation: fadeInUp 1.4s ease-out;
+            box-shadow: 0 4px 15px rgba(46, 160, 134, 0.3);
+            margin: 0.5rem;
+        }
+
+        .cta-button.secondary {
+            background: transparent;
+            border: 2px solid #0EA5E9;
+            color: #E0F2FE;
+            box-shadow: none;
+        }
+
+        .cta-button:hover {
+            transform: scale(1.05);
+            background: linear-gradient(to right, #3BB095, #1A8C6E);
+            box-shadow: 0 6px 20px rgba(46, 160, 134, 0.5);
+        }
+
+        .cta-button.secondary:hover {
+            background: #0EA5E9;
+            color: #0F172A;
+            box-shadow: 0 6px 20px rgba(14, 165, 233, 0.5);
+        }
+
+        .section {
+            padding: 5rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            color: #0EA5E9;
+        }
+
+        .tableau-container {
+            background: rgba(230, 240, 250, 0.1);
+            padding: 2rem;
+            border-radius: 12px;
+            margin: 2rem 0;
+            backdrop-filter: blur(10px);
+            animation: fadeIn 1s ease-out;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+
+        .tableau-link {
+            display: inline-block;
+            padding: 1.5rem 3rem;
+            background: linear-gradient(to right, #0EA5E9, #2563EB);
+            color: #F8FAFC;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 1.2rem;
+            transition: transform 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 15px rgba(14, 165, 233, 0.3);
+        }
+
+        .tableau-link:hover {
+            transform: scale(1.05);
+            background: linear-gradient(to right, #38BDF8, #3B82F6);
+            box-shadow: 0 6px 20px rgba(14, 165, 233, 0.5);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .feature-card {
+            background: rgba(230, 240, 250, 0.1);
+            padding: 2rem;
+            border-radius: 10px;
+            text-align: center;
+            transition: transform 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #0EA5E9;
+        }
+
+        .footer {
+            background: #0A1C3B;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .footer a {
+            color: #E0F2FE;
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            color: #0EA5E9;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0);
+                opacity: 0.2;
+            }
+            50% {
+                transform: translateY(-50px);
+                opacity: 0.4;
+            }
+            100% {
+                transform: translateY(0);
+                opacity: 0.2;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero-content h1 {
+                font-size: 3rem;
+            }
+
+            .hero-content p {
+                font-size: 1.1rem;
+            }
+
+            .nav-links a {
+                margin-left: 1rem;
+                font-size: 1rem;
+            }
+
+            .cta-button {
+                padding: 1.6rem 3.2rem;
+                font-size: 1.2rem;
+            }
+
+            .tableau-link {
+                padding: 1.2rem 2.5rem;
+                font-size: 1rem;
+            }
+
+            .nav-logo svg {
+                width: 36px;
+                height: 36px;
+            }
+
+            .nav-logo span {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#home" class="nav-logo">
+                <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M20 80 L50 20 L80 80" fill="none" stroke="#0EA5E9" stroke-width="6"/>
+                    <path d="M30 60 H70" fill="none" stroke="#0EA5E9" stroke-width="6"/>
+                    <path d="M50 20 L60 40 H40 Z" fill="#2EA086"/>
+                    <path d="M35 80 Q50 60 65 80" fill="none" stroke="#2EA086" stroke-width="4"/>
+                </svg>
+                <span>Dividend Analytics</span>
+            </a>
+            <div class="nav-links">
+                <a href="#home">Home</a>
+                <a href="#analytics">Analytics</a>
+                <a href="#features">Features</a>
+                <a href="#contact">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <section id="home" class="hero">
+        <div class="hero-background">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <div class="hero-content">
+            <h1>Unlock Dividend Stock Insights</h1>
+            <p>Explore comprehensive financial analytics and make informed investment decisions with our cutting-edge Tableau dashboards.</p>
+            <div>
+                <a href="#analytics" class="cta-button">View Analytics</a>
+                <a href="#contact" class="cta-button secondary">Get in Touch</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="analytics" class="section">
+        <h2>Dividend Stock Analytics Dashboard</h2>
+        <div class="tableau-container">
+            <!-- Replaced iframe with a styled link due to embedding issues -->
+            <a href="https://public.tableau.com/views/Dividend_17459468512610/Dashboard1" target="_blank" class="tableau-link">View Dashboard on Tableau Public</a>
+
+            <!-- To revert to iframe once embedding is enabled, uncomment the following: -->
+            <!--
+            <iframe 
+                class="tableau-embed"
+                src="https://public.tableau.com/views/Dividend_17459468512610/Dashboard1?:showVizHome=no&:embed=true&:size=1200,800"
+                title="Dividend Stock Analytics Dashboard">
+            </iframe>
+            <div class="tableau-fallback" id="tableau-fallback">
+                <p>Unable to load the Tableau dashboard. Please view it directly on <a href="https://public.tableau.com/views/Dividend_17459468512610/Dashboard1" target="_blank">Tableau Public</a>.</p>
+            </div>
+            -->
+        </div>
+    </section>
+
+    <section id="features" class="section">
+        <h2>Why Choose Our Analytics?</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <h3>Real-Time Data</h3>
+                <p>Access up-to-date dividend yields, payout ratios, and stock performance metrics.</p>
+            </div>
+            <div class="feature-card">
+                <h3>Comprehensive Analysis</h3>
+                <p>Evaluate dividend sustainability through cash flow and earnings metrics.</p>
+            </div>
+            <div class="feature-card">
+                <h3>Interactive Dashboards</h3>
+                <p>Customize views and drill down into specific sectors or companies.</p>
+            </div>
+            <div class="feature-card">
+                <h3>Investment Insights</h3>
+                <p>Identify high-yield opportunities with our proprietary ranking system.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="section">
+        <h2>Contact Us</h2>
+        <p>Have questions about our analytics or need personalized investment advice?</p>
+        <p>Email us at <a href="mailto:info@dividendanalytics.com">info@dividendanalytics.com</a></p>
+    </section>
+
+    <footer class="footer">
+        <p>© 2025 Dividend Analytics. All rights reserved. | <a href="#privacy">Privacy Policy</a> | <a href="#terms">Terms of Service</a></p>
+    </footer>
+
+    <script>
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Smooth scrolling for nav links
+        document.querySelectorAll('.nav-links a').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href').substring(1);
+                const targetElement = document.getElementById(targetId);
+                window.scrollTo({
+                    top: targetElement.offsetTop - 70,
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Animate elements on scroll
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 1s ease-out';
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.section, .feature-card').forEach(element => {
+            observer.observe(element);
+        });
+
+        // Parallax effect for hero background
+        window.addEventListener('scroll', () => {
+            const heroBackground = document.querySelector('.hero-background');
+            const scrollPosition = window.scrollY;
+            heroBackground.style.transform = `translateY(${scrollPosition * 0.2}px)`;
+        });
+    </script>
+</body>
+</html>
