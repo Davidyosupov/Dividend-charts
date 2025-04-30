@@ -206,15 +206,23 @@
 
         .section {
             padding: 5rem 2rem;
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
         }
 
         .section h2 {
             font-size: 2.5rem;
-            margin-bottom: 2rem;
+            margin-bottom: 1rem;
             text-align: center;
             color: #0EA5E9;
+        }
+
+        .section p.description {
+            font-size: 1.1rem;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+            text-align: center;
+            color: #E0F2FE;
         }
 
         .tableau-container {
@@ -302,6 +310,12 @@
             color: #0EA5E9;
         }
 
+        .footer .disclosure {
+            font-size: 0.9rem;
+            color: #A3BFFA;
+            margin-top: 0.5rem;
+        }
+
         @keyframes fadeInUp {
             from {
                 opacity: 0;
@@ -364,6 +378,14 @@
             .nav-logo span {
                 font-size: 1.5rem;
             }
+
+            .section h2 {
+                font-size: 2rem;
+            }
+
+            .section p.description {
+                font-size: 1rem;
+            }
         }
     </style>
 </head>
@@ -372,16 +394,22 @@
         <div class="nav-container">
             <a href="#home" class="nav-logo">
                 <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M20 80 L50 20 L80 80" fill="none" stroke="#0EA5E9" stroke-width="6"/>
-                    <path d="M30 60 H70" fill="none" stroke="#0EA5E9" stroke-width="6"/>
-                    <path d="M50 20 L60 40 H40 Z" fill="#2EA086"/>
-                    <path d="M35 80 Q50 60 65 80" fill="none" stroke="#2EA086" stroke-width="4"/>
+                    <!-- Swordfish-inspired logo -->
+                    <path d="M20 50 Q30 30 50 50 T80 50" fill="none" stroke="#0EA5E9" stroke-width="4" />
+                    <path d="M80 50 L95 50" fill="none" stroke="#0EA5E9" stroke-width="6" />
+                    <path d="M20 50 Q25 40 30 50 T35 50" fill="#2EA086" />
+                    <path d="M20 50 L15 45 L10 50 L15 55 Z" fill="#2EA086" />
+                    <path d="M50 50 Q55 45 60 50 Q65 55 70 50" fill="none" stroke="#2EA086" stroke-width="3" />
                 </svg>
                 <span>Dividend Analytics</span>
             </a>
             <div class="nav-links">
                 <a href="#home">Home</a>
-                <a href="#analytics">Analytics</a>
+                <a href="#dividend-yield">Dividend Yield</a>
+                <a href="#yearly-return">Yearly Return</a>
+                <a href="#growth-score">Growth Score</a>
+                <a href="#reliability-risk">Reliability & Risk</a>
+                <a href="#sector-yield">Sector Yield</a>
                 <a href="#features">Features</a>
                 <a href="#contact">Contact</a>
             </div>
@@ -398,40 +426,178 @@
             <h1>Unlock Dividend Stock Insights</h1>
             <p>Explore comprehensive financial analytics and make informed investment decisions with our cutting-edge Tableau dashboards.</p>
             <div>
-                <a href="#analytics" class="cta-button">View Analytics</a>
+                <a href="#dividend-yield" class="cta-button">View Analytics</a>
                 <a href="#contact" class="cta-button secondary">Get in Touch</a>
             </div>
         </div>
     </section>
 
-    <section id="analytics" class="section">
-        <h2>Dividend Stock Analytics Dashboard</h2>
+    <!-- Dividend Yield Section -->
+    <section id="dividend-yield" class="section">
+        <h2>Dividend Yield</h2>
+        <p class="description">This chart displays the dividend yield percentages for various stocks, helping you identify high-yield opportunities for your portfolio.</p>
         <div class="tableau-container">
-            <div class='tableauPlaceholder' id='viz1745946882621' style='position: relative'>
+            <div class='tableauPlaceholder' id='viz1' style='position: relative'>
                 <noscript>
-                    <a href='https://public.tableau.com/views/Dividend_17459468512610/Dashboard1'>
-                        <img alt='Dashboard 1 ' src='https://public.tableau.com/static/images/Di/Dividend_17459468512610/Dashboard1/1_rss.png' style='border: none' class="tableau-static" />
+                    <a href='https://public.tableau.com/views/Dividend_17459468512610/DivYeald'>
+                        <img alt='Dividend Yield ' src='https://public.tableau.com/static/images/Di/Dividend_17459468512610/DivYeald/1_rss.png' style='border: none' class="tableau-static" />
                     </a>
                 </noscript>
                 <object class='tableauViz' style='display:none;'>
                     <param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' />
                     <param name='embed_code_version' value='3' />
                     <param name='site_root' value='' />
-                    <param name='name' value='Dividend_17459468512610/Dashboard1' />
+                    <param name='name' value='Dividend_17459468512610/DivYeald' />
                     <param name='toolbar' value='yes' />
-                    <param name='static_image' value='https://public.tableau.com/static/images/Di/Dividend_17459468512610/Dashboard1/1.png' />
+                    <param name='static_image' value='https://public.tableau.com/static/images/Di/Dividend_17459468512610/DivYeald/1.png' />
                     <param name='animate_transition' value='yes' />
                     <param name='display_static_image' value='yes' />
                     <param name='display_spinner' value='yes' />
                     <param name='display_overlay' value='yes' />
                     <param name='display_count' value='yes' />
-                    <param name='language' value='en-US' />
+                    <param name='language' value='en-GB' />
                     <param name='filter' value='publish=yes' />
                 </object>
             </div>
-            <div class="tableau-fallback" id="tableau-fallback">
-                <img src="https://public.tableau.com/static/images/Di/Dividend_17459468512610/Dashboard1/1.png" alt="Static Dashboard Preview" class="tableau-static" />
-                <p>Interactive dashboard could not be loaded. Please ensure embedding is enabled in Tableau Public settings, or view it directly on <a href="https://public.tableau.com/views/Dividend_17459468512610/Dashboard1" target="_blank">Tableau Public</a>.</p>
+            <div class="tableau-fallback" id="tableau-fallback-1">
+                <img src="https://public.tableau.com/static/images/Di/Dividend_17459468512610/DivYeald/1.png" alt="Dividend Yield Static Preview" class="tableau-static" />
+                <p>Interactive dashboard could not be loaded. Please ensure embedding is enabled in Tableau Public settings, or view it directly on <a href="https://public.tableau.com/views/Dividend_17459468512610/DivYeald" target="_blank">Tableau Public</a>.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Yearly Return Section -->
+    <section id="yearly-return" class="section">
+        <h2>10K Investment Yearly Return</h2>
+        <p class="description">Explore the yearly returns on a $10,000 investment across different stocks, showcasing potential growth over time.</p>
+        <div class="tableau-container">
+            <div class='tableauPlaceholder' id='viz2' style='position: relative'>
+                <noscript>
+                    <a href='https://public.tableau.com/views/Dividend_17459468512610/YearlyYeald10KInvestmentReturn'>
+                        <img alt='Yearly Return ' src='https://public.tableau.com/static/images/Di/Dividend_17459468512610/YearlyYeald10KInvestmentReturn/1_rss.png' style='border: none' class="tableau-static" />
+                    </a>
+                </noscript>
+                <object class='tableauViz' style='display:none;'>
+                    <param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' />
+                    <param name='embed_code_version' value='3' />
+                    <param name='site_root' value='' />
+                    <param name='name' value='Dividend_17459468512610/YearlyYeald10KInvestmentReturn' />
+                    <param name='toolbar' value='yes' />
+                    <param name='static_image' value='https://public.tableau.com/static/images/Di/Dividend_17459468512610/YearlyYeald10KInvestmentReturn/1.png' />
+                    <param name='animate_transition' value='yes' />
+                    <param name='display_static_image' value='yes' />
+                    <param name='display_spinner' value='yes' />
+                    <param name='display_overlay' value='yes' />
+                    <param name='display_count' value='yes' />
+                    <param name='language' value='en-GB' />
+                    <param name='filter' value='publish=yes' />
+                </object>
+            </div>
+            <div class="tableau-fallback" id="tableau-fallback-2">
+                <img src="https://public.tableau.com/static/images/Di/Dividend_17459468512610/YearlyYeald10KInvestmentReturn/1.png" alt="Yearly Return Static Preview" class="tableau-static" />
+                <p>Interactive dashboard could not be loaded. Please ensure embedding is enabled in Tableau Public settings, or view it directly on <a href="https://public.tableau.com/views/Dividend_17459468512610/YearlyYeald10KInvestmentReturn" target="_blank">Tableau Public</a>.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Growth Score Section -->
+    <section id="growth-score" class="section">
+        <h2>Growth Score</h2>
+        <p class="description">This visualization ranks stocks based on their growth potential, helping you identify opportunities for long-term gains.</p>
+        <div class="tableau-container">
+            <div class='tableauPlaceholder' id='viz3' style='position: relative'>
+                <noscript>
+                    <a href='https://public.tableau.com/views/Dividend_17459468512610/GrowthScore'>
+                        <img alt='Growth Score ' src='https://public.tableau.com/static/images/Di/Dividend_17459468512610/GrowthScore/1_rss.png' style='border: none' class="tableau-static" />
+                    </a>
+                </noscript>
+                <object class='tableauViz' style='display:none;'>
+                    <param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' />
+                    <param name='embed_code_version' value='3' />
+                    <param name='site_root' value='' />
+                    <param name='name' value='Dividend_17459468512610/GrowthScore' />
+                    <param name='toolbar' value='yes' />
+                    <param name='static_image' value='https://public.tableau.com/static/images/Di/Dividend_17459468512610/GrowthScore/1.png' />
+                    <param name='animate_transition' value='yes' />
+                    <param name='display_static_image' value='yes' />
+                    <param name='display_spinner' value='yes' />
+                    <param name='display_overlay' value='yes' />
+                    <param name='display_count' value='yes' />
+                    <param name='language' value='en-GB' />
+                    <param name='filter' value='publish=yes' />
+                </object>
+            </div>
+            <div class="tableau-fallback" id="tableau-fallback-3">
+                <img src="https://public.tableau.com/static/images/Di/Dividend_17459468512610/GrowthScore/1.png" alt="Growth Score Static Preview" class="tableau-static" />
+                <p>Interactive dashboard could not be loaded. Please ensure embedding is enabled in Tableau Public settings, or view it directly on <a href="https://public.tableau.com/views/Dividend_17459468512610/GrowthScore" target="_blank">Tableau Public</a>.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Reliability + Risk Scores Section -->
+    <section id="reliability-risk" class="section">
+        <h2>Reliability + Risk Scores</h2>
+        <p class="description">Evaluate stocks based on their reliability and risk scores, providing insights into the stability and potential volatility of your investments.</p>
+        <div class="tableau-container">
+            <div class='tableauPlaceholder' id='viz4' style='position: relative'>
+                <noscript>
+                    <a href='https://public.tableau.com/views/Dividend_17459468512610/ReliabilityByRisk'>
+                        <img alt='Reliability + Risk Scores ' src='https://public.tableau.com/static/images/Di/Dividend_17459468512610/ReliabilityByRisk/1_rss.png' style='border: none' class="tableau-static" />
+                    </a>
+                </noscript>
+                <object class='tableauViz' style='display:none;'>
+                    <param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' />
+                    <param name='embed_code_version' value='3' />
+                    <param name='site_root' value='' />
+                    <param name='name' value='Dividend_17459468512610/ReliabilityByRisk' />
+                    <param name='toolbar' value='yes' />
+                    <param name='static_image' value='https://public.tableau.com/static/images/Di/Dividend_17459468512610/ReliabilityByRisk/1.png' />
+                    <param name='animate_transition' value='yes' />
+                    <param name='display_static_image' value='yes' />
+                    <param name='display_spinner' value='yes' />
+                    <param name='display_overlay' value='yes' />
+                    <param name='display_count' value='yes' />
+                    <param name='language' value='en-GB' />
+                    <param name='filter' value='publish=yes' />
+                </object>
+            </div>
+            <div class="tableau-fallback" id="tableau-fallback-4">
+                <img src="https://public.tableau.com/static/images/Di/Dividend_17459468512610/ReliabilityByRisk/1.png" alt="Reliability + Risk Scores Static Preview" class="tableau-static" />
+                <p>Interactive dashboard could not be loaded. Please ensure embedding is enabled in Tableau Public settings, or view it directly on <a href="https://public.tableau.com/views/Dividend_17459468512610/ReliabilityByRisk" target="_blank">Tableau Public</a>.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Average Dividend Yield by Sector Section -->
+    <section id="sector-yield" class="section">
+        <h2>Average Dividend Yield by Sector (MSTY Excluded)</h2>
+        <p class="description">Compare average dividend yields across different sectors, excluding MSTY, to identify sector-specific opportunities for dividend income.</p>
+        <div class="tableau-container">
+            <div class='tableauPlaceholder' id='viz5' style='position: relative'>
+                <noscript>
+                    <a href='https://public.tableau.com/views/Dividend_17459468512610/AverageDivYealdBySectorMSTYexcluded'>
+                        <img alt='Average Dividend Yield by Sector ' src='https://public.tableau.com/static/images/Di/Dividend_17459468512610/AverageDivYealdBySectorMSTYexcluded/1_rss.png' style='border: none' class="tableau-static" />
+                    </a>
+                </noscript>
+                <object class='tableauViz' style='display:none;'>
+                    <param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' />
+                    <param name='embed_code_version' value='3' />
+                    <param name='site_root' value='' />
+                    <param name='name' value='Dividend_17459468512610/AverageDivYealdBySectorMSTYexcluded' />
+                    <param name='toolbar' value='yes' />
+                    <param name='static_image' value='https://public.tableau.com/static/images/Di/Dividend_17459468512610/AverageDivYealdBySectorMSTYexcluded/1.png' />
+                    <param name='animate_transition' value='yes' />
+                    <param name='display_static_image' value='yes' />
+                    <param name='display_spinner' value='yes' />
+                    <param name='display_overlay' value='yes' />
+                    <param name='display_count' value='yes' />
+                    <param name='language' value='en-GB' />
+                    <param name='filter' value='publish=yes' />
+                </object>
+            </div>
+            <div class="tableau-fallback" id="tableau-fallback-5">
+                <img src="https://public.tableau.com/static/images/Di/Dividend_17459468512610/AverageDivYealdBySectorMSTYexcluded/1.png" alt="Average Dividend Yield by Sector Static Preview" class="tableau-static" />
+                <p>Interactive dashboard could not be loaded. Please ensure embedding is enabled in Tableau Public settings, or view it directly on <a href="https://public.tableau.com/views/Dividend_17459468512610/AverageDivYealdBySectorMSTYexcluded" target="_blank">Tableau Public</a>.</p>
             </div>
         </div>
     </section>
@@ -466,6 +632,7 @@
 
     <footer class="footer">
         <p>© 2025 Dividend Analytics. All rights reserved. | <a href="#privacy">Privacy Policy</a> | <a href="#terms">Terms of Service</a></p>
+        <p class="disclosure">All data presented is true as of April 2025.</p>
     </footer>
 
     <script>
@@ -513,36 +680,43 @@
             heroBackground.style.transform = `translateY(${scrollPosition * 0.2}px)`;
         });
 
-        // Tableau JavaScript API Embed Script
-        var divElement = document.getElementById('viz1745946882621');
-        var vizElement = divElement.getElementsByTagName('object')[0];
-        if (divElement.offsetWidth > 800) {
-            vizElement.style.width = '100%';
-            vizElement.style.height = (divElement.offsetWidth * 0.75) + 'px';
-        } else if (divElement.offsetWidth > 500) {
-            vizElement.style.width = '100%';
-            vizElement.style.height = (divElement.offsetWidth * 0.75) + 'px';
-        } else {
-            vizElement.style.width = '100%';
-            vizElement.style.height = '727px';
+        // Function to embed Tableau visualizations
+        function embedTableau(vizId, fallbackId) {
+            var divElement = document.getElementById(vizId);
+            var vizElement = divElement.getElementsByTagName('object')[0];
+            if (divElement.offsetWidth > 800) {
+                vizElement.style.width = '100%';
+                vizElement.style.height = (divElement.offsetWidth * 0.75) + 'px';
+            } else if (divElement.offsetWidth > 500) {
+                vizElement.style.width = '100%';
+                vizElement.style.height = (divElement.offsetWidth * 0.75) + 'px';
+            } else {
+                vizElement.style.width = '100%';
+                vizElement.style.height = '727px';
+            }
+            var scriptElement = document.createElement('script');
+            scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';
+            scriptElement.onload = function() {
+                setTimeout(() => {
+                    const tableauViz = divElement.querySelector('.tableauViz');
+                    const fallbackDiv = document.getElementById(fallbackId);
+                    if (tableauViz.style.display === 'none') {
+                        fallbackDiv.style.display = 'block';
+                    }
+                }, 5000);
+            };
+            scriptElement.onerror = function() {
+                document.getElementById(fallbackId).style.display = 'block';
+            };
+            vizElement.parentNode.insertBefore(scriptElement, vizElement);
         }
-        var scriptElement = document.createElement('script');
-        scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';
-        scriptElement.onload = function() {
-            // Check if the dashboard loaded and is interactive
-            setTimeout(() => {
-                const tableauViz = document.querySelector('.tableauViz');
-                const fallbackDiv = document.getElementById('tableau-fallback');
-                if (tableauViz.style.display === 'none') {
-                    fallbackDiv.style.display = 'block';
-                }
-            }, 5000);
-        };
-        scriptElement.onerror = function() {
-            // If the script fails to load, show the fallback
-            document.getElementById('tableau-fallback').style.display = 'block';
-        };
-        vizElement.parentNode.insertBefore(scriptElement, vizElement);
+
+        // Embed each Tableau visualization
+        embedTableau('viz1', 'tableau-fallback-1');
+        embedTableau('viz2', 'tableau-fallback-2');
+        embedTableau('viz3', 'tableau-fallback-3');
+        embedTableau('viz4', 'tableau-fallback-4');
+        embedTableau('viz5', 'tableau-fallback-5');
     </script>
 </body>
 </html>
