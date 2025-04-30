@@ -4,28 +4,63 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dividend Stock Analytics</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Montserrat:wght@600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
             font-family: 'Roboto', sans-serif;
+            scroll-behavior: smooth;
         }
 
         body {
             background: linear-gradient(135deg, #0F2A4D 0%, #4A6582 100%);
             color: #F8FAFC;
             line-height: 1.6;
+            position: relative;
+            overflow-x: hidden;
         }
 
+        /* Preloader */
+        #preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #0A1C3B;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease;
+        }
+
+        #preloader .spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid #0EA5E9;
+            border-top: 5px solid transparent;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Navbar */
         .navbar {
             background: #0A1C3B;
-            padding: 1rem 2rem;
+            padding: 1.5rem 2rem;
             position: fixed;
             width: 100%;
             top: 0;
             z-index: 1000;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
             transition: all 0.3s ease;
         }
 
@@ -34,7 +69,7 @@
         }
 
         .nav-container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
             display: flex;
             justify-content: space-between;
@@ -42,8 +77,6 @@
         }
 
         .nav-logo {
-            display: flex;
-            align-items: center;
             transition: transform 0.3s ease;
         }
 
@@ -51,30 +84,34 @@
             transform: scale(1.05);
         }
 
-        .nav-logo svg {
-            width: 48px;
-            height: 48px;
-            margin-right: 0.5rem;
+        .nav-logo img {
+            max-height: 80px;
+            width: auto;
+            filter: drop-shadow(0 0 8px rgba(14, 165, 233, 0.3));
+            transition: filter 0.3s ease;
         }
 
-        .nav-logo span {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: #0EA5E9;
+        .nav-logo:hover img {
+            filter: drop-shadow(0 0 12px rgba(14, 165, 233, 0.5));
         }
 
         .nav-links a {
             color: #E0F2FE;
             text-decoration: none;
-            margin-left: 2rem;
-            font-size: 1.1rem;
-            transition: color 0.3s ease;
+            margin-left: 2.5rem;
+            font-size: 1.2rem;
+            font-weight: 500;
+            transition: color 0.3s ease, transform 0.3s ease;
         }
 
         .nav-links a:hover {
             color: #0EA5E9;
+            transform: translateY(-2px);
         }
 
+       
+
+        /* Hero Section */
         .hero {
             height: 100vh;
             display: flex;
@@ -94,7 +131,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.3);
+            background: rgba(0, 0, 0, 0.4);
             z-index: 1;
         }
 
@@ -105,6 +142,7 @@
             width: 100%;
             height: 100%;
             z-index: 0;
+            background: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"%3E%3Cpath fill="rgba(14,165,233,0.1)" fill-opacity="1" d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,112C672,96,768,96,864,128C960,160,1056,224,1152,224C1248,224,1344,160,1392,128L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"%3E%3C/path%3E%3C/svg%3E') repeat-x bottom;
         }
 
         .hero-background span {
@@ -115,24 +153,24 @@
         }
 
         .hero-background span:nth-child(1) {
-            width: 100px;
-            height: 100px;
+            width: 120px;
+            height: 120px;
             top: 10%;
             left: 15%;
             animation-delay: 0s;
         }
 
         .hero-background span:nth-child(2) {
-            width: 80px;
-            height: 80px;
+            width: 90px;
+            height: 90px;
             top: 60%;
             left: 70%;
             animation-delay: 5s;
         }
 
         .hero-background span:nth-child(3) {
-            width: 120px;
-            height: 120px;
+            width: 150px;
+            height: 150px;
             top: 30%;
             left: 85%;
             animation-delay: 10s;
@@ -144,11 +182,14 @@
         }
 
         .hero-content h1 {
-            font-size: 4rem;
-            margin-bottom: 1rem;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 5rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
             animation: fadeInUp 1s ease-out;
             position: relative;
             padding-bottom: 0.5rem;
+            text-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
         }
 
         .hero-content h1::after {
@@ -157,31 +198,31 @@
             bottom: 0;
             left: 50%;
             transform: translateX(-50%);
-            width: 100px;
-            height: 4px;
+            width: 150px;
+            height: 5px;
             background: linear-gradient(to right, #2EA086, #0EA5E9);
             border-radius: 2px;
         }
 
         .hero-content p {
-            font-size: 1.3rem;
-            max-width: 600px;
-            margin: 0 auto 2rem;
+            font-size: 1.5rem;
+            max-width: 700px;
+            margin: 0 auto 2.5rem;
             animation: fadeInUp 1.2s ease-out;
         }
 
         .cta-button {
             display: inline-block;
-            padding: 2rem 4rem;
+            padding: 1.5rem 3rem;
             background: linear-gradient(to right, #2EA086, #0A7B5F);
             color: #0F172A;
             text-decoration: none;
-            border-radius: 8px;
+            border-radius: 50px;
             font-weight: 700;
-            font-size: 1.4rem;
+            font-size: 1.3rem;
             transition: transform 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
             animation: fadeInUp 1.4s ease-out;
-            box-shadow: 0 4px 15px rgba(46, 160, 134, 0.3);
+            box-shadow: 0 6px 20px rgba(46, 160, 134, 0.4);
             margin: 0.5rem;
         }
 
@@ -193,32 +234,48 @@
         }
 
         .cta-button:hover {
-            transform: scale(1.05);
+            transform: translateY(-5px);
             background: linear-gradient(to right, #3BB095, #1A8C6E);
-            box-shadow: 0 6px 20px rgba(46, 160, 134, 0.5);
+            box-shadow: 0 8px 25px rgba(46, 160, 134, 0.6);
         }
 
         .cta-button.secondary:hover {
             background: #0EA5E9;
             color: #0F172A;
-            box-shadow: 0 6px 20px rgba(14, 165, 233, 0.5);
+            box-shadow: 0 8px 25px rgba(14, 165, 233, 0.6);
         }
 
+        /* Sections */
         .section {
-            padding: 5rem 2rem;
+            padding: 6rem 2rem;
             max-width: 1400px;
             margin: 0 auto;
+            position: relative;
+        }
+
+        .section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100px;
+            background: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"%3E%3Cpath fill="rgba(14,165,233,0.05)" fill-opacity="1" d="M0,224L48,213.3C96,203,192,181,288,192C384,203,480,245,576,245.3C672,245,768,203,864,192C960,181,1056,203,1152,213.3C1248,224,1344,224,1392,224L1440,224L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"%3E%3C/path%3E%3C/svg%3E') no-repeat top;
+            z-index: 0;
         }
 
         .section h2 {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
             text-align: center;
             color: #0EA5E9;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
         }
 
         .section p.description {
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             max-width: 800px;
             margin: 0 auto 2rem;
             text-align: center;
@@ -226,14 +283,19 @@
         }
 
         .tableau-container {
-            background: rgba(230, 240, 250, 0.1);
+            background: rgba(230, 240, 250, 0.15);
             padding: 2rem;
-            border-radius: 12px;
+            border-radius: 15px;
             margin: 2rem 0;
             backdrop-filter: blur(10px);
-            animation: fadeIn 1s ease-out;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease;
             position: relative;
+            z-index: 1;
+        }
+
+        .tableau-container:hover {
+            transform: translateY(-10px);
         }
 
         .tableauPlaceholder {
@@ -248,16 +310,6 @@
         .tableau-fallback {
             display: none;
             text-align: center;
-            padding: 2rem;
-            color: #F8FAFC;
-            background: rgba(255, 0, 0, 0.2);
-            border-radius: 8px;
-            margin: 1rem 0;
-        }
-
-        .tableau-fallback a {
-            color: #0EA5E9;
-            text-decoration: underline;
         }
 
         .tableau-static {
@@ -266,44 +318,72 @@
             max-width: 100%;
             height: auto;
             border-radius: 8px;
-            margin-bottom: 1rem;
         }
 
+        /* Features Section */
         .features-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 2rem;
             margin-top: 2rem;
         }
 
         .feature-card {
             background: rgba(230, 240, 250, 0.1);
-            padding: 2rem;
-            border-radius: 10px;
+            padding: 2.5rem;
+            border-radius: 15px;
             text-align: center;
-            transition: transform 0.3s ease;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
             backdrop-filter: blur(10px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
         }
 
         .feature-card:hover {
             transform: translateY(-10px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+        }
+
+        .feature-card i {
+            font-size: 2.5rem;
+            color: #0EA5E9;
+            margin-bottom: 1rem;
         }
 
         .feature-card h3 {
-            font-size: 1.5rem;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 600;
             margin-bottom: 1rem;
             color: #0EA5E9;
         }
 
+        .feature-card p {
+            color: #E0F2FE;
+        }
+
+        /* Footer */
         .footer {
             background: #0A1C3B;
-            padding: 2rem;
+            padding: 3rem 2rem;
             text-align: center;
+            border-top: 2px solid #0EA5E9;
+        }
+
+        .footer .footer-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 2rem;
         }
 
         .footer a {
             color: #E0F2FE;
             text-decoration: none;
+            margin: 0 1rem;
+            transition: color 0.3s ease;
         }
 
         .footer a:hover {
@@ -313,9 +393,39 @@
         .footer .disclosure {
             font-size: 0.9rem;
             color: #A3BFFA;
-            margin-top: 0.5rem;
         }
 
+        /* Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #0EA5E9;
+            color: #F8FAFC;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.5rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .back-to-top:hover {
+            transform: translateY(-5px);
+            background: #2EA086;
+        }
+
+        /* Animations */
         @keyframes fadeInUp {
             from {
                 opacity: 0;
@@ -353,11 +463,11 @@
 
         @media (max-width: 768px) {
             .hero-content h1 {
-                font-size: 3rem;
+                font-size: 3.5rem;
             }
 
             .hero-content p {
-                font-size: 1.1rem;
+                font-size: 1.2rem;
             }
 
             .nav-links a {
@@ -366,42 +476,49 @@
             }
 
             .cta-button {
-                padding: 1.6rem 3.2rem;
-                font-size: 1.2rem;
+                padding: 1.2rem 2.5rem;
+                font-size: 1.1rem;
             }
 
-            .nav-logo svg {
-                width: 36px;
-                height: 36px;
-            }
-
-            .nav-logo span {
-                font-size: 1.5rem;
+            .nav-logo img {
+                max-height: 60px;
             }
 
             .section h2 {
-                font-size: 2rem;
+                font-size: 2.2rem;
             }
 
             .section p.description {
                 font-size: 1rem;
             }
+
+            .sub-nav {
+                top: 100px;
+            }
+
+            .sub-nav a {
+                margin: 0 0.5rem;
+                font-size: 0.9rem;
+            }
+
+            .footer .footer-container {
+                flex-direction: column;
+                text-align: center;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- Preloader -->
+    <div id="preloader">
+        <div class="spinner"></div>
+    </div>
+
+    <!-- Navbar -->
     <nav class="navbar">
         <div class="nav-container">
             <a href="#home" class="nav-logo">
-                <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <!-- Swordfish-inspired logo -->
-                    <path d="M20 50 Q30 30 50 50 T80 50" fill="none" stroke="#0EA5E9" stroke-width="4" />
-                    <path d="M80 50 L95 50" fill="none" stroke="#0EA5E9" stroke-width="6" />
-                    <path d="M20 50 Q25 40 30 50 T35 50" fill="#2EA086" />
-                    <path d="M20 50 L15 45 L10 50 L15 55 Z" fill="#2EA086" />
-                    <path d="M50 50 Q55 45 60 50 Q65 55 70 50" fill="none" stroke="#2EA086" stroke-width="3" />
-                </svg>
-                <span>Dividend Analytics</span>
+                <img src="path/to/your-logo.png" alt="Dividend Analytics Logo">
             </a>
             <div class="nav-links">
                 <a href="#home">Home</a>
@@ -416,6 +533,16 @@
         </div>
     </nav>
 
+    <!-- Sub-Navigation -->
+    <div class="sub-nav">
+        <a href="#dividend-yield">Dividend Yield</a>
+        <a href="#yearly-return">Yearly Return</a>
+        <a href="#growth-score">Growth Score</a>
+        <a href="#reliability-risk">Reliability & Risk</a>
+        <a href="#sector-yield">Sector Yield</a>
+    </div>
+
+    <!-- Hero Section -->
     <section id="home" class="hero">
         <div class="hero-background">
             <span></span>
@@ -432,36 +559,38 @@
         </div>
     </section>
 
-<!-- Dividend Yield Section -->
-<section id="dividend-yield" class="section">
-    <h2>Dividend Yield</h2>
-    <p class="description">This chart displays the dividend yield percentages for various stocks, helping you identify high-yield opportunities for your portfolio.</p>
-    <div class="tableau-container">
-        <div class='tableauPlaceholder' id='viz1' style='position: relative'>
-            <noscript>
-                <a href='https://public.tableau.com/views/Dividend_17459468512610/DivYeald'>
-                    <img alt='Dividend Yield ' src='https://public.tableau.com/static/images/Di/Dividend_17459468512610/DivYeald/1_rss.png' style='border: none' class="tableau-static" />
-                </a>
-            </noscript>
-            <object class='tableauViz' style='display:none;'>
-                <param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' />
-                <param name='embed_code_version' value='3' />
-                <param name='site_root' value='' />
-                <param name='name' value='Dividend_17459468512610/DivYeald' />
-                <param name='toolbar' value='yes' />
-                <param name='static_image' value='https://public.tableau.com/static/images/Di/Dividend_17459468512610/DivYeald/1.png' />
-                <param name='animate_transition' value='yes' />
-                <param name='display_static_image' value='yes' />
-                <param name='display_spinner' value='yes' />
-                <param name='display_overlay' value='yes' />
-                <param name='display_count' value='no' />
-                <param name='language' value='en-GB' />
-                <param name='filter' value='publish=yes' />
-            </object>
+    <!-- Dividend Yield Section -->
+    <section id="dividend-yield" class="section">
+        <h2>Dividend Yield</h2>
+        <p class="description">This chart displays the dividend yield percentages for various stocks, helping you identify high-yield opportunities for your portfolio.</p>
+        <div class="tableau-container">
+            <div class='tableauPlaceholder' id='viz1' style='position: relative'>
+                <noscript>
+                    <a href='https://public.tableau.com/views/Dividend_17459468512610/DivYeald'>
+                        <img alt='Dividend Yield ' src='https://public.tableau.com/static/images/Di/Dividend_17459468512610/DivYeald/1_rss.png' style='border: none' class="tableau-static" />
+                    </a>
+                </noscript>
+                <object class='tableauViz' style='display:none;'>
+                    <param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' />
+                    <param name='embed_code_version' value='3' />
+                    <param name='site_root' value='' />
+                    <param name='name' value='Dividend_17459468512610/DivYeald' />
+                    <param name='toolbar' value='yes' />
+                    <param name='static_image' value='https://public.tableau.com/static/images/Di/Dividend_17459468512610/DivYeald/1.png' />
+                    <param name='animate_transition' value='yes' />
+                    <param name='display_static_image' value='yes' />
+                    <param name='display_spinner' value='yes' />
+                    <param name='display_overlay' value='yes' />
+                    <param name='display_count' value='no' />
+                    <param name='language' value='en-GB' />
+                    <param name='filter' value='publish=yes' />
+                </object>
+            </div>
+            <div class="tableau-fallback" id="tableau-fallback-1">
+                <img src="https://public.tableau.com/static/images/Di/Dividend_17459468512610/DivYeald/1.png" alt="Dividend Yield Static Preview" class="tableau-static" />
+            </div>
         </div>
-    </div>
-</section>
-
+    </section>
 
     <!-- Yearly Return Section -->
     <section id="yearly-return" class="section">
@@ -490,7 +619,9 @@
                     <param name='filter' value='publish=yes' />
                 </object>
             </div>
-          
+            <div class="tableau-fallback" id="tableau-fallback-2">
+                <img src="https://public.tableau.com/static/images/Di/Dividend_17459468512610/YearlyYeald10KInvestmentReturn/1.png" alt="Yearly Return Static Preview" class="tableau-static" />
+            </div>
         </div>
     </section>
 
@@ -521,7 +652,9 @@
                     <param name='filter' value='publish=yes' />
                 </object>
             </div>
-           
+            <div class="tableau-fallback" id="tableau-fallback-3">
+                <img src="https://public.tableau.com/static/images/Di/Dividend_17459468512610/GrowthScore/1.png" alt="Growth Score Static Preview" class="tableau-static" />
+            </div>
         </div>
     </section>
 
@@ -552,7 +685,9 @@
                     <param name='filter' value='publish=yes' />
                 </object>
             </div>
-            
+            <div class="tableau-fallback" id="tableau-fallback-4">
+                <img src="https://public.tableau.com/static/images/Di/Dividend_17459468512610/ReliabilityByRisk/1.png" alt="Reliability + Risk Scores Static Preview" class="tableau-static" />
+            </div>
         </div>
     </section>
 
@@ -583,44 +718,75 @@
                     <param name='filter' value='publish=yes' />
                 </object>
             </div>
-          
+            <div class="tableau-fallback" id="tableau-fallback-5">
+                <img src="https://public.tableau.com/static/images/Di/Dividend_17459468512610/AverageDivYealdBySectorMSTYexcluded/1.png" alt="Average Dividend Yield by Sector Static Preview" class="tableau-static" />
+            </div>
         </div>
     </section>
 
+    <!-- Features Section -->
     <section id="features" class="section">
         <h2>Why Choose Our Analytics?</h2>
         <div class="features-grid">
             <div class="feature-card">
+                <i class="fas fa-clock"></i>
                 <h3>Real-Time Data</h3>
                 <p>Access up-to-date dividend yields, payout ratios, and stock performance metrics.</p>
             </div>
             <div class="feature-card">
+                <i class="fas fa-chart-line"></i>
                 <h3>Comprehensive Analysis</h3>
                 <p>Evaluate dividend sustainability through cash flow and earnings metrics.</p>
             </div>
             <div class="feature-card">
+                <i class="fas fa-tachometer-alt"></i>
                 <h3>Interactive Dashboards</h3>
                 <p>Customize views and drill down into specific sectors or companies.</p>
             </div>
             <div class="feature-card">
+                <i class="fas fa-lightbulb"></i>
                 <h3>Investment Insights</h3>
                 <p>Identify high-yield opportunities with our proprietary ranking system.</p>
             </div>
         </div>
     </section>
 
+    <!-- Contact Section -->
     <section id="contact" class="section">
         <h2>Contact Us</h2>
         <p>Have questions about our analytics or need personalized investment advice?</p>
         <p>Email us at <a href="mailto:info@dividendanalytics.com">info@dividendanalytics.com</a></p>
     </section>
 
+    <!-- Footer -->
     <footer class="footer">
-        <p>© 2025 Dividend Analytics. All rights reserved. | <a href="#privacy">Privacy Policy</a> | <a href="#terms">Terms of Service</a></p>
-        <p class="disclosure">All data presented is true as of April 2025.</p>
+        <div class="footer-container">
+            <div>
+                <p>© 2025 Dividend Analytics. All rights reserved.</p>
+            </div>
+            <div>
+                <a href="#privacy">Privacy Policy</a>
+                <a href="#terms">Terms of Service</a>
+            </div>
+            <div>
+                <p class="disclosure">All data presented is true as of April 2025.</p>
+            </div>
+        </div>
     </footer>
 
+    <!-- Back to Top Button -->
+    <a href="#home" class="back-to-top"><i class="fas fa-arrow-up"></i></a>
+
     <script>
+        // Preloader
+        window.addEventListener('load', () => {
+            const preloader = document.getElementById('preloader');
+            preloader.style.opacity = '0';
+            setTimeout(() => {
+                preloader.style.display = 'none';
+            }, 500);
+        });
+
         // Navbar scroll effect
         window.addEventListener('scroll', () => {
             const navbar = document.querySelector('.navbar');
@@ -631,21 +797,20 @@
             }
         });
 
-      // Smooth scrolling for all internal anchor links (starting with #)
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function(e) {
-        const targetId = this.getAttribute('href').substring(1);
-        const targetElement = document.getElementById(targetId);
-        if (targetElement) {
-            e.preventDefault();
-            window.scrollTo({
-                top: targetElement.offsetTop - 70,
-                behavior: 'smooth'
+        // Smooth scrolling for all internal anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                const targetId = this.getAttribute('href').substring(1);
+                const targetElement = document.getElementById(targetId);
+                if (targetElement) {
+                    e.preventDefault();
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 120,
+                        behavior: 'smooth'
+                    });
+                }
             });
-        }
-    });
-});
-
+        });
 
         // Animate elements on scroll
         const observer = new IntersectionObserver((entries) => {
@@ -657,7 +822,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             });
         }, { threshold: 0.1 });
 
-        document.querySelectorAll('.section, .feature-card').forEach(element => {
+        document.querySelectorAll('.section, .feature-card, .tableau-container').forEach(element => {
             observer.observe(element);
         });
 
@@ -666,6 +831,16 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             const heroBackground = document.querySelector('.hero-background');
             const scrollPosition = window.scrollY;
             heroBackground.style.transform = `translateY(${scrollPosition * 0.2}px)`;
+        });
+
+        // Back to Top button visibility
+        window.addEventListener('scroll', () => {
+            const backToTop = document.querySelector('.back-to-top');
+            if (window.scrollY > 300) {
+                backToTop.classList.add('visible');
+            } else {
+                backToTop.classList.remove('visible');
+            }
         });
 
         // Function to embed Tableau visualizations
